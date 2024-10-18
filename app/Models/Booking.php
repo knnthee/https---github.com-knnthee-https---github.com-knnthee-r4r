@@ -23,3 +23,4 @@ class Booking extends Model
         return $this->hasOne('App\Models\Room','id','room_id');
     }
 }
+ 

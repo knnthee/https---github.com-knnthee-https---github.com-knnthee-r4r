@@ -59,8 +59,32 @@ class HomeController extends Controller
 
         return redirect()->back()->with('message', 'Room Booked Succesfully');
 
-
-
         }
+        
     }
+
+    public function room($id)
+    {
+        $room = Room::find($id);
+
+        return view('home.room_details', compact('room'));
+    }
+
+    public function our_rooms()
+    {
+
+        $room= Room::all();
+    return view('home.our_rooms', compact('room'));
+
+    }
+    public function user_wait()
+    {
+        $room= room::all();
+
+        $booking= Booking::all();
+    return view('home.user_wait', compact('booking','room'));
+
+    }
+
+   
 }
