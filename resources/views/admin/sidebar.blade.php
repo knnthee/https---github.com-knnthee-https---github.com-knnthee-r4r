@@ -11,12 +11,13 @@
       <!-- Sidebar Navidation Menus--><span class="heading">ADMIN</span>
       <ul class="list-unstyled">
               <li><a href="{{url('home')}}"> <i class="icon-home"></i>Home </a></li>
+              <li><a href="{{url('approval_room')}}"> <i class="icon-home"></i>Post Requests </a></li>
              
               <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> 
                 <i class="icon-windows"></i>Rooms </a>
                 <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                  <li><a href="{{url('approval_room')}}">Post Requests </a></li>
-                  <li><a href="{{url('view_admin_room')}}">View Rooms</a></li>
+                  <li><a href="{{url('view_admin_room')}}">Approved Posts </a></li>
+                  <li><a href="{{url('rejected_post')}}">Rejected Posts</a></li>
                   <li><a href="#">Page</a></li>
                 </ul>
               </li>

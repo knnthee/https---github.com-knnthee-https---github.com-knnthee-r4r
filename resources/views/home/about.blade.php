@@ -7,7 +7,7 @@
                 <p> At staywise, we make it easy to find the perfect
                   dorm or room in Dagupan, Pangasinan, offering a convenient and reliable
                platform to match you with your ideal accommadation </p>
-                <a class="read_more" href="Javascript:void(0)"> Read More</a>
+                <a class="read_more" href="{{url('register')}}"> Read More</a>
              </div>
           </div>
           <div class="col-md-7">

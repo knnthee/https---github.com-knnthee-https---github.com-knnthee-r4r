@@ -12,7 +12,7 @@
       <!-- end loader -->
       <!-- header -->
       <header>
-      @include('home.header')
+      @include('home.ulo')
       </header>
       <!-- end header inner -->
       <!-- end header -->
@@ -33,21 +33,35 @@
     
         .th_deg
         {
+            color: rgb(0, 0, 0);
             background-color: rgb(255, 255, 255);
             padding: 15px;
         }
         
         tr
         {
-            border: 3px solid white;
+            border: 3px solid rgb(0, 0, 0);
         }
     
         td
         {
+            color: rgb(0, 0, 0);
+            background-color: rgb(213, 213, 213);
             padding: 10px;
         }
         
         </style>
+
+
+<div class="page-content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <!-- Flash message for success -->
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
     
         <div class="page-content">
             <div class="page-header">
@@ -63,7 +77,9 @@
                         <th class="th_deg">Wifi</th>
                         <th class="th_deg">Room Type</th>
                         <th class="th_deg">Image</th>
+                        <th class="th_deg"></th>
                         <th class="th_deg">Status</th>
+                       
                     </tr>
     
                     @foreach($booking as $booking)
@@ -78,9 +94,15 @@
                         <td>
                             <img width="200" src="room/{{$booking->room->image}}">
                         </td>
+
+                        <td>
+                            @if($booking->status != 'cancelled') 
+                                <a class="btn btn-danger" href="{{ url('cancel_book', $booking->id) }}">Cancel</a>
+                            @endif
+                        </td>
              
                        
-
+                       
                 
                         <td>
                             @if($booking->status == 'approved')
@@ -99,8 +121,17 @@
     
                             <span style="color: yellow;">Waiting</span>
                             @endif
+
+                            @if($booking->status == 'cancelled')
+    
+                            <span style="color: red;">Cancelled</span>
+                            @endif
+                            
                         </td>
                         @endforeach
+
+                       
+    
                     </tr>
     
                     

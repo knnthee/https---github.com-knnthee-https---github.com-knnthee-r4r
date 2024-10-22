@@ -7,10 +7,19 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Room;
 use App\Models\Booking;
+use App\Exports\BookingsExport;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 
 
 class OwnerController extends Controller
 {
+
+  public function export()
+{
+    return Excel::download(new BookingsExport, 'bookings.xlsx'); // You can change the filename
+}
     public function index()
     {
         $rooms = Room::where('owner_id', Auth::id())->get(); // Fetch rooms belonging to the logged-in owner
@@ -52,12 +61,34 @@ class OwnerController extends Controller
     }
 
     public function view_room()
-    {
+{
+    // Use paginate() to enable pagination, e.g., 5 items per page
+    $approvedRooms = Room::where('status', 'approved')->paginate(5);
 
-      $data =Room::all();
-      return view('owner.view_room',compact('data'));
 
-    }
+    // Pass the paginated data to the view
+    return view('owner.view_room', compact('approvedRooms', ));
+}
+public function rejected_room()
+{
+    // Use paginate() to enable pagination, e.g., 5 items per page
+   
+    $rejectedRooms = Room::where('status', 'rejected')->paginate(5);
+    
+
+    // Pass the paginated data to the view
+    return view('owner.rejected_room', compact('rejectedRooms'));
+}
+public function pending_room()
+{
+    // Use paginate() to enable pagination, e.g., 5 items per page
+
+    $waitingRooms = Room::where('status', 'waiting')->paginate(5);
+
+    // Pass the paginated data to the view
+    return view('owner.pending_room', compact( 'waitingRooms'));
+}
+
 
     public function room_delete($id)
     {
@@ -99,10 +130,34 @@ class OwnerController extends Controller
       Return redirect()->back();  
     }
 
-    public function bookings(){
+    public function bookings()
+    {
+        
+        $waitingRoom = Booking::where('status', 'waiting')->get();
 
-      $data=Booking::all();
-      return view('owner.booking' ,compact('data'));
+        return view('owner.booking', compact('waitingRoom'));
+    }
+    public function approved()
+    {
+        $approvedRoom = Booking::where('status', 'approved')->get();
+        
+
+        return view('owner.approved', compact('approvedRoom',));
+    }
+    public function rejected()
+    {
+        $rejectedRoom = Booking::where('status', 'rejected')->get();
+        
+
+        return view('owner.rejected', compact('rejectedRoom',));
+    }
+
+    public function cancelled()
+    {
+        $cancelledRoom = Booking::where('status', 'cancelled')->get();
+        
+
+        return view('owner.cancelled', compact('cancelledRoom',));
     }
 
     public function delete_booking($id)
@@ -125,6 +180,20 @@ class OwnerController extends Controller
       return redirect()->back();
     }
 
+
+    public function cancel_book($id)
+    {
+      $booking = Booking::find($id);
+
+      if ($booking){
+      $booking->status='cancelled';
+      $booking->save();
+      }
+      return redirect()->back()->with('success', 'Booking has been cancelled successfully.'); 
+
+    } 
+
+    
     public function reject_book($id)
     {
       $booking = Booking::find($id);
@@ -134,4 +203,5 @@ class OwnerController extends Controller
 
       return redirect()->back();
     }
+    
 }

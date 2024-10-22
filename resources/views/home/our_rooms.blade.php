@@ -12,7 +12,7 @@
       <!-- end loader -->
       <!-- header -->
       <header>
-      @include('home.header')
+      @include('home.ulo')
       </header>
       <!-- end header inner -->
       <!-- end header -->

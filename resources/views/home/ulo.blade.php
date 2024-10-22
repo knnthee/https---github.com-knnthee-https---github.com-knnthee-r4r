@@ -5,9 +5,9 @@
           <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
              <div class="full">
                 <div class="center-desk">
-                   <div class="logo">
-                      <a >StayWise</a>
-                   </div>
+                  <div class="logo">
+                     <a href="{{url('/homepage')}}">StayWise</a>
+                  </div>
                 </div>
              </div>
           </div>
@@ -18,16 +18,18 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarsExample04">
                    <ul class="navbar-nav mr-auto">
-                     
-                      
-                      <li class="nav-item">
-                         <a class="nav-link" href="{{url('/register')}}">Our room</a>
-                      </li>
-                      <li class="nav-item">
-                         <a class="nav-link" href="{{url('/register')}}">Bookings</a>
+                      <li class="nav-item active">
+                         <a class="nav-link" href="{{url('/homepage')}}">Home</a>
                       </li>
                       
-               
+                      <li class="nav-item">
+                         <a class="nav-link" href="{{url('/our_rooms')}}">Our room</a>
+                      </li>
+                      <li class="nav-item">
+                         <a class="nav-link" href="{{url('/user_wait')}}">Bookings</a>
+                      </li>
+                      
+                      
                       
                      
                      @if (Route::has('login'))
@@ -51,7 +53,19 @@
                        @endif
 
                    </ul>
+                   
                 </div>
+                <div class="notification">
+                  <a href="#" id="notification-bell" onclick="toggleNotificationDropdown()">
+                      <i class="fa fa-bell" aria-hidden="true"></i>
+                      <span id="notification-count" class="badge">0</span>
+                  </a>
+                  <div id="notification-dropdown" class="notification-dropdown" style="display: none;">
+                      <ul id="notification-list">
+                          <li>No new notifications</li>
+                      </ul>
+                  </div>
+              </div>
              </nav>
           </div>
        </div>

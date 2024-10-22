@@ -87,7 +87,7 @@
                         <th class="th_deg">Actions</th>
                         <th class="th_deg">Status</th>
                     </tr>
-                    @foreach($approvedRooms as $data)
+                    @foreach($waitingRooms as $data)
                     <tr>
                         <td>{{$data->room_title}}</td>
                         <td>{!! Str::limit($data->description, 150) !!}</td>
@@ -113,10 +113,11 @@
                     </tr>
                     @endforeach
                     <div class="pagination">
-                        {{ $approvedRooms->links()}}
+                        {{ $waitingRooms->links()}}
                     </div>
                 </table>
 
+                
             </div>
         </div>
     </div>

@@ -30,7 +30,10 @@
         <div class="page-header">
             <div class="container-fluid">
                 <!-- Approved Rooms Table -->
-                <h2>Approved Rooms</h2>
+               
+
+                <!-- Rejected Rooms Table -->
+                <h2>Rejected Rooms</h2>
                 <table class="table_deg">
                     <tr>
                         <th class="th_deg">Room Title</th>
@@ -42,7 +45,7 @@
                         <th class="th_deg">Delete</th>
                         <th class="th_deg">Status</th>
                     </tr>
-                    @foreach($approvedRooms as $room)
+                    @foreach($rejectedRooms as $room)
                     <tr>
                         <td>{{$room->room_title}}</td>
                         <td>{!! Str::limit($room->description, 150) !!}</td>
@@ -54,15 +57,13 @@
                             <a onclick="return confirm('Are you sure to delete this?');" class="btn btn-danger" href="{{url('room_delete', $room->id)}}">Delete</a>
                         </td>
                         <td>
-                            <span style="color: green" class="status-approved">Approved</span>
+                            <span style="color: red"class="status-rejected">Rejected</span>
                         </td>
                     </tr>
                     @endforeach
                     
                 </table>
-       
-
-             
+              
             </div>
         </div>
     </div>

@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     @include('owner.css')
-    @include('owner.header')
-    @include('owner.sidebar')
 
     <style type="text/css">
         body {
@@ -67,54 +65,63 @@
         .status-waiting {
             color: orange; /* More distinct color for waiting */
         }
+        h1 {
+    padding-top: 30px; /* Padding only on the top for h1 */
+}
+
+h2 {
+    padding-top: 40px; /* Padding only on the top for h2 */
+}
+
+
     </style>
-</head>
-<body>
+
+    @include('owner.header')
+    @include('owner.sidebar')
+
     <div class="page-content">
         <div class="page-header">
             <div class="container-fluid">
-                <h2 class="text-center">Room Management</h2>
+                <a href="{{ route('export.bookings') }}" class="btn btn-primary">Export Bookings</a>
 
-                <h3 class="mt-4">Approved Rooms</h3>
+                <!-- Approved Room Table -->
+                <h1>Approved Bookings</h1>
                 <table class="table_deg">
                     <tr>
-                        <th class="th_deg">Room Title</th>
-                        <th class="th_deg">Description</th>
-                        <th class="th_deg">Price</th>
-                        <th class="th_deg">Wifi</th>
-                        <th class="th_deg">Room Type</th>
-                        <th class="th_deg">Image</th>
-                        <th class="th_deg">Actions</th>
+                        <th class="th_deg">Room ID</th>
+                        <th class="th_deg">Customer Name</th>
+                        <th class="th_deg">Email</th>
+                        <th class="th_deg">Phone</th>
+                        <th class="th_deg">Arrival Date</th>
+                        <th class="th_deg">Leaving Date</th>
                         <th class="th_deg">Status</th>
+                        <th class="th_deg">Room Title</th>
+                        <th class="th_deg">Price</th>
+                        <th class="th_deg">Image</th>
+                        <th class="th_deg">Delete</th>
+                       
                     </tr>
-                    @foreach($approvedRooms as $data)
+               
+                    @foreach($approvedRoom as $data)
                     <tr>
-                        <td>{{$data->room_title}}</td>
-                        <td>{!! Str::limit($data->description, 150) !!}</td>
-                        <td>₱{{$data->price}}</td>
-                        <td>{{$data->wifi}}</td>
-                        <td>{{$data->room_type}}</td>
+                        <td>{{$data->room_id}}</td>
+                        <td>{{$data->name}}</td>
+                        <td>{{$data->email}}</td>
+                        <td>{{$data->phone}}</td>
+                        <td>{{$data->start_date}}</td>
+                        <td>{{$data->end_date}}</td>
+                        <td><span style="color: green;">Approved</span></td>
+                        <td>{{$data->room->room_title}}</td>
+                        <td>₱{{$data->room->price}}.00</td>
                         <td>
-                            <img src="room/{{$data->image}}" alt="Room Image">
+                            <img style="width: 200px!important" src="/room/{{$data->room->image}}" loading="lazy">
                         </td>
                         <td>
-                            <a onclick="return confirm('Are you sure to delete this?');" class="btn btn-danger" href="{{url('room_delete', $data->id)}}">Delete</a>
-                            <a class="btn btn-warning" href="{{url('room_update', $data->id)}}">Update</a>
+                            <a onclick="return confirm('Are you sure to delete this');" class="btn btn-danger" href="{{url('delete_booking', $data->id)}}">Delete</a>
                         </td>
-                        <td>
-                            @if($data->status == 'approved')
-                                <span class="status-approved">Approved</span>
-                            @elseif($data->status == 'rejected')
-                                <span class="status-rejected">Rejected</span>
-                            @elseif($data->status == 'waiting')
-                                <span class="status-waiting">Waiting</span>
-                            @endif
-                        </td>
+                     
                     </tr>
                     @endforeach
-                    <div class="pagination">
-                        {{ $approvedRooms->links()}}
-                    </div>
                 </table>
 
             </div>
@@ -122,5 +129,6 @@
     </div>
 
     @include('owner.footer')
+
 </body>
 </html>

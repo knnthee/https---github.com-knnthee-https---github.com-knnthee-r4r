@@ -75,7 +75,9 @@
             <div class="container-fluid">
                 <h2 class="text-center">Room Management</h2>
 
-                <h3 class="mt-4">Approved Rooms</h3>
+            
+
+                <h3 class="mt-4">Rejected Rooms</h3>
                 <table class="table_deg">
                     <tr>
                         <th class="th_deg">Room Title</th>
@@ -87,7 +89,7 @@
                         <th class="th_deg">Actions</th>
                         <th class="th_deg">Status</th>
                     </tr>
-                    @foreach($approvedRooms as $data)
+                    @foreach($rejectedRooms as $data)
                     <tr>
                         <td>{{$data->room_title}}</td>
                         <td>{!! Str::limit($data->description, 150) !!}</td>
@@ -102,21 +104,16 @@
                             <a class="btn btn-warning" href="{{url('room_update', $data->id)}}">Update</a>
                         </td>
                         <td>
-                            @if($data->status == 'approved')
-                                <span class="status-approved">Approved</span>
-                            @elseif($data->status == 'rejected')
-                                <span class="status-rejected">Rejected</span>
-                            @elseif($data->status == 'waiting')
-                                <span class="status-waiting">Waiting</span>
-                            @endif
+                            <span class="status-rejected">Rejected</span>
                         </td>
                     </tr>
                     @endforeach
                     <div class="pagination">
-                        {{ $approvedRooms->links()}}
+                        {{ $rejectedRooms->links()}}
                     </div>
                 </table>
 
+               
             </div>
         </div>
     </div>

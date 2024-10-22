@@ -27,9 +27,9 @@
 
     
 
-    @include('admin.css')
-    @include('admin.header')
-    @include('admin.sidebar')
+    @include('owner.css')
+    @include('owner.header')
+    @include('owner.sidebar')
     
 
     <div class="page-content">
@@ -93,7 +93,7 @@
     
 
     
-        @include('admin.footer')
+        @include('owner.footer')
       
   </body>
 </html>

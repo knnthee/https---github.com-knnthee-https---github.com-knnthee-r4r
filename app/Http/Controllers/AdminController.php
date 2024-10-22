@@ -19,13 +19,15 @@ class AdminController extends Controller
           if($usertype=='user')
           {
             $room = Room::all();
-            return view('home.index', compact('room'));
+            return view('home.homepage', compact('room'));
           }
           
           else if($usertype=='admin')
           {
-            $room = room::where('status','approved')->get()->count();
-            return view('admin.index', compact('room'));
+            $room1 = room::where('status','approved')->get()->count();
+            $room2 = room::where('status','rejected')->get()->count();
+            $room3 = room::where('status','waiting')->get()->count();
+            return view('admin.index', compact('room1','room2','room3'));
           }
           else if($usertype=='owner')
           {
@@ -41,16 +43,16 @@ class AdminController extends Controller
     public function home()
     {
       $room = Room::where('status','=','Approved')->get();
+      
       return view('home.index', compact('room'));
     }
 
     public function approval_room()
-    {
+{
+    $data = Room::where('status', 'waiting')->paginate(5); // using $data
+    return view('admin.approval_room', compact('data')); // passing $data to the view
+}
 
-      $data =Room::all();
-      return view('admin.approval_room',compact('data'));
-
-    }
 
     public function approve_post($id)
     {
@@ -76,12 +78,32 @@ class AdminController extends Controller
 {
     // Fetch all room data
     $data = Room::all();  // Correct the variable name to 'data' for room details
-    
+ 
     // Count approved rooms
-    $room = Room::where('status', 'approved')->count();
 
     // Pass both 'data' and 'room' to the view
-    return view('admin.view_admin_room', compact('data', 'room'));
+    return view('admin.view_admin_room', compact('data','room'));
+}
+
+public function rejected_post()
+{
+    // Fetch all room data
+  $rejectedRooms = Room::where('status', 'rejected')->get();
+ 
+    // Count approved rooms
+    $room = Room::where('status', 'rejected')->count();
+
+    // Pass both 'data' and 'room' to the view
+    return view('admin.rejected_post', compact('rejectedRooms','room'));
+}
+
+
+public function rooms()
+{
+    $approvedRooms = Room::where('status', 'approved')->get();
+    $rejectedRooms = Room::where('status', 'rejected')->get();
+
+    return view('admin.view_admin_room', compact('approvedRooms', 'rejectedRooms'));
 }
 
 
